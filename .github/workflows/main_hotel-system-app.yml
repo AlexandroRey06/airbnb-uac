@@ -8,26 +8,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set up Java version
+      
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
-          cache: maven
-
+          
       - name: Build with Maven
-        run: mvn clean package
-        working-directory: ./auth-service    # Especificamos el directorio del proyecto
-
-      - name: Upload artifact for deployment job
+        run: mvn clean package -f auth-service/pom.xml
+        
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: './auth-service/target/*.war'  # Ruta actualizada al WAR
+          path: auth-service/target/*.war
 
   deploy:
     runs-on: ubuntu-latest
@@ -37,15 +34,14 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: java-app
-
+          
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'hotel-system-app'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: '*.war'
