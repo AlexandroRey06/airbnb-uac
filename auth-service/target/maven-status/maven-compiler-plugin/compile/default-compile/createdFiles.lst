@@ -1,5 +1,6 @@
 com/hotel/service/AuthService.class
 com/hotel/dao/RolDaoImpl.class
+com/hotel/factory/DatabaseConnection$PooledConnection.class
 com/hotel/service/UsuarioService.class
 com/hotel/dao/ReplicatedRolDaoImpl.class
 com/hotel/factory/DatabaseType.class
