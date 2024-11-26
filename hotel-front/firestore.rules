@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas existentes para hoteles
+    match /hoteles/{hotelId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+      
+      match /habitaciones/{habitacionId} {
+        allow read, write: if true;
+      }
+    }
+    
+    // Nuevas reglas para calificaciones
+    match /calificaciones/{calificacionId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+  }
+}
