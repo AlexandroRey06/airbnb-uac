@@ -93,6 +93,12 @@ Esta solución integral está pensada para adaptarse tanto a hoteles independien
 - Vistas: Componentes Vue.js
 - Controladores: `UsuarioController.java`, `RolController.java`, `AuthController.java`
 
+#### 5. Patrón Singleton
+- `DatabaseConnection.java`: Gestión de conexiones a base de datos
+- `DaoFactory.java`: Fábrica de objetos DAO
+- `AuthenticationManager.java`: Gestión de autenticación
+- `ConfigurationManager.java`: Gestión de configuraciones
+
 ## Estructura de Base de Datos
 
 ### PostgreSQL

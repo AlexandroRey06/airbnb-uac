@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   getters: {
-    isAdmin: (state) => state.user?.rolId === 1,
+    isAdmin: (state) => (state.user?.rolId === 1 || state.user?.rolId === 3),
     currentUser: (state) => state.user
   },
 

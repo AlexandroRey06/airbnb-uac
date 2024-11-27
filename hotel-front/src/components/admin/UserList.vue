@@ -253,7 +253,15 @@
       async handleSubmit() {
         try {
           if (this.editingUser) {
-            await this.usersStore.updateUser(this.editingUser.id, this.formData)
+            const body = {
+                "id": this.formData.id,
+                "email": this.formData.email,
+                "nombre": this.formData.nombre,
+                "apellido": this.formData.apellido,
+                "telefono": this.formData.telefono,
+                "rolId": this.formData.rolId
+            }
+            await this.usersStore.updateUser(this.editingUser.id, body)
           } else {
             await this.usersStore.createUser(this.formData)
           }
