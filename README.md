@@ -1,8 +1,55 @@
-```markdown
+markdown
 # Sistema de Gestión de Hoteles
 
 ## Descripción General
-Sistema web desarrollado para la gestión de hoteles y reservas, que implementa autenticación de usuarios con diferentes roles. El sistema permite administrar hoteles, habitaciones y reservas, con una interfaz intuitiva tanto para administradores como para usuarios finales.
+
+Sistema web integral desarrollado para la gestión hotelera, diseñado para optimizar las operaciones diarias de hoteles y facilitar el proceso de reservas. El sistema implementa una robusta autenticación de usuarios con diferentes niveles de acceso y roles específicos, garantizando la seguridad y el control adecuado de las operaciones.
+
+### Funcionalidad Principal
+
+El sistema se divide en dos interfaces principales:
+
+#### Panel Administrativo
+- **Gestión de Hoteles**: Permite crear y administrar múltiples propiedades hoteleras, incluyendo detalles como ubicación, servicios, y políticas.
+- **Control de Habitaciones**: Administración detallada de habitaciones, incluyendo tipos, tarifas, disponibilidad y mantenimiento.
+- **Gestión de Usuarios**: Administración completa de personal y sus niveles de acceso.
+- **Reportes y Estadísticas**: Generación de informes detallados sobre ocupación, ingresos y tendencias.
+- **Gestión de Reservaciones**: Control centralizado de todas las reservas, check-in y check-out.
+
+#### Portal de Usuarios
+- **Búsqueda Inteligente**: Sistema de búsqueda avanzada con filtros por fecha, ubicación, precio y características.
+- **Reservas en Línea**: Proceso simplificado de reservación con confirmación inmediata.
+- **Gestión de Cuenta**: Perfil de usuario con historial de reservas y preferencias.
+- **Sistema de Calificaciones**: Permite a los usuarios compartir sus experiencias y calificar los servicios.
+
+### Características Destacadas
+
+- **Arquitectura Distribuida**: Sistema basado en microservicios para mayor escalabilidad y mantenimiento.
+- **Interfaz Responsiva**: Diseño adaptable a diferentes dispositivos y tamaños de pantalla.
+- **Alta Disponibilidad**: Implementación en la nube con redundancia y balanceo de carga.
+- **Seguridad Robusta**: 
+  - Autenticación mediante JWT
+  - Encriptación de datos sensibles
+  - Control de acceso basado en roles
+  - Protección contra ataques comunes
+
+### Beneficios Clave
+
+- **Para Administradores**:
+  - Centralización de operaciones hoteleras
+  - Reducción de errores en reservas
+  - Optimización de la ocupación
+  - Análisis de datos en tiempo real
+  - Automatización de procesos rutinarios
+
+- **Para Usuarios**:
+  - Proceso de reserva simplificado
+  - Acceso a información detallada
+  - Gestión autónoma de reservaciones
+  - Comunicación directa con el hotel
+  - Historial completo de estadías
+
+Esta solución integral está pensada para adaptarse tanto a hoteles independientes como a cadenas hoteleras, con capacidad de escalar según las necesidades del negocio.
 
 ## Tecnologías Utilizadas
 
