@@ -1,35 +1,30 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy JAR app to Azure Web App - api-system-app
+name: Build and deploy JAR app to Azure Web App
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Java version
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v3
+      
+      - name: Set up Java
+        uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'microsoft'
-
+          distribution: 'adopt'
+          
       - name: Build with Maven
-        run: mvn clean install
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+        run: mvn clean package -f auth-service/pom.xml
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: auth-service/target/*.war
 
   deploy:
     runs-on: ubuntu-latest
@@ -37,18 +32,16 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-      
+    
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
           name: java-app
-      
+          
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'api-system-app'
-          slot-name: 'Production'
-          package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EAB642F96DA44E0B918C4345E8DD7E9F }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: '*.war'
