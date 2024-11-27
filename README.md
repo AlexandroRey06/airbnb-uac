@@ -263,8 +263,5 @@ npm run build
 5. Crear Pull Request
 
 ## Autor
-[Tu Nombre]
-
-## Licencia
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles
+Alex Rey
 ```
