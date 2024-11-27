@@ -210,7 +210,7 @@ JWT_SECRET=your_jwt_secret
 
 ### Variables de Entorno Frontend
 ```env
-VITE_API_URL=http://localhost:8080/api
+VITE_API_URL=https://api-system-app-byfvg9bkf8c9f5g9.canadacentral-01.azurewebsites.net/api
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id
