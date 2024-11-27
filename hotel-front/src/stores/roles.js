@@ -62,6 +62,8 @@ export const useRolesStore = defineStore('roles', {
     },
 
     async updateRole(id, roleData) {
+      console.log(id, roleData);
+      
       this.loading = true
       this.error = null
       try {

@@ -128,6 +128,23 @@ hoteles/
 - Middleware de validación de JWT
 - Protección de rutas según rol de usuario
 
+## Diagramas del Sistema
+
+### Diagrama de Arquitectura
+El siguiente diagrama muestra la arquitectura completa del sistema, incluyendo la comunicación entre el frontend, los diferentes servicios y las bases de datos:
+
+![Diagrama de Arquitectura](/docs/images/Dg.jpeg)
+
+### Diagrama de Clases
+El diagrama de clases representa la estructura de las entidades principales del sistema y sus relaciones:
+
+![Diagrama de Clases](/docs/images/Cl.jpeg)
+
+### Diagrama de UML
+El siguiente diagrama muestra el flujo de interacciones para los procesos principales del sistema:
+
+![Diagrama de UML](/docs/images/uml.jpeg)
+
 ## Configuración del Entorno
 
 ### Variables de Entorno Backend
@@ -199,7 +216,7 @@ npm run build
 5. Crear Pull Request
 
 ## Autor
-Alex Rey
+[Tu Nombre]
 
 ## Licencia
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles

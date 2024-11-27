@@ -17,7 +17,7 @@ export const roleService = {
     },
 
     async update(id, roleData) {
-        const response = await api.put(`/roles/${id}`, roleData)
+        const response = await api.put(`/roles/${id}`, {...roleData, id})
         return response.data
     },
 

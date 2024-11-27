@@ -169,13 +169,18 @@ export default {
            class="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow duration-200"
       >
         <div class="flex justify-between items-start">
-          <div>
-            <h3 class="text-lg font-medium text-gray-900">
+          <div class="flex justify-between">
+            <div class="mr-2">
+              <img class="w-full h-48 object-cover" :src="reservacion?.imagen" alt="">
+            </div>
+            <div>
+              <h3 class="text-lg font-medium text-gray-900">
               {{ reservacion.hotelNombre }}
-            </h3>
-            <p class="text-sm text-gray-500">
-              Habitación {{ reservacion.numero }}
-            </p>
+              </h3>
+              <p class="text-sm text-gray-500">
+                Habitación {{ reservacion.numero }}
+              </p>
+            </div>
           </div>
           <span 
             class="px-3 py-1 text-sm rounded-full"
@@ -192,7 +197,9 @@ export default {
           <button 
             v-if="reservacion.disponible === true"
             @click="handleCancelar(reservacion.idReservacion, reservacion.hotelId, reservacion.id)"
-            class="px-4 py-2 text-red-600 hover:text-red-800 transition-colors duration-200"
+            class="px-4 py-2"
+            :class="reservacion.estado === 'completada' ? 'text-gray-200' : 'hover:text-red-800 text-red-600 transition-colors duration-200'"
+            :disabled="reservacion.estado === 'completada'" 
           >
             Cancelar reservación
           </button>
@@ -214,6 +221,7 @@ export default {
               :hotel-id="selectedReservation.hotelId"
               :room-id="selectedReservation.id"
               @rating-submitted="(data) => handleRatingSubmitted(data)"
+              @close="closeModal"
             />
           </VModal>
         </div>

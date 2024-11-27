@@ -40,20 +40,24 @@
                     </router-link>
                 </template>
 
-                <router-link 
+                  <router-link 
                     to="/reservations" 
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    v-if="authStore.isAuthenticated"
                     >
                     Mis reservas
-                    </router-link>
+                  </router-link>
               </div>
             </div>
           </div>
           <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
               <template v-if="authStore.isAuthenticated">
-                <span class="text-gray-300 mr-4">
-                  {{ authStore.user?.nombre }}
+                <span class="flex items-center gap-2 px-3 py-1.5 bg-gray-800/50 rounded-md">
+                  <User class="h-4 w-4 text-gray-300" />
+                  <span class="text-gray-300 font-medium">
+                    {{ authStore.user?.nombre }}
+                  </span>
                 </span>
                 <button 
                   @click="logout" 
@@ -80,6 +84,7 @@
   <script>
   import { useAuthStore } from '@/stores/auth'
   import { useRouter } from 'vue-router'
+  import { User } from 'lucide-vue-next';
   
   export default {
     name: 'VNavbar',
@@ -87,6 +92,9 @@
       const authStore = useAuthStore()
       const router = useRouter()
       return { authStore, router }
+    },
+    components: {
+      User
     },
     methods: {
       async logout() {
