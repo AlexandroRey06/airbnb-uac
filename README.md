@@ -10,16 +10,15 @@ Sistema web integral desarrollado para la gestión hotelera, diseñado para opti
 El sistema se divide en dos interfaces principales:
 
 #### Panel Administrativo
-- **Gestión de Hoteles**: Permite crear y administrar múltiples propiedades hoteleras, incluyendo detalles como ubicación, servicios, y políticas.
-- **Control de Habitaciones**: Administración detallada de habitaciones, incluyendo tipos, tarifas, disponibilidad y mantenimiento.
+- **Gestión de Hoteles**: Permite crear y administrar múltiples propiedades hoteleras, incluyendo detalles como ubicación, servicios.
+- **Control de Habitaciones**: Administración detallada de habitaciones, incluyendo tipos, tarifas, disponibilidad.
 - **Gestión de Usuarios**: Administración completa de personal y sus niveles de acceso.
-- **Reportes y Estadísticas**: Generación de informes detallados sobre ocupación, ingresos y tendencias.
-- **Gestión de Reservaciones**: Control centralizado de todas las reservas, check-in y check-out.
+- **Gestión de Reservaciones**: Control centralizado de todas las reservas.
 
 #### Portal de Usuarios
-- **Búsqueda Inteligente**: Sistema de búsqueda avanzada con filtros por fecha, ubicación, precio y características.
+- **Búsqueda Inteligente**: Sistema de búsqueda avanzada con filtros por nombre y ubicación.
 - **Reservas en Línea**: Proceso simplificado de reservación con confirmación inmediata.
-- **Gestión de Cuenta**: Perfil de usuario con historial de reservas y preferencias.
+- **Gestión de Cuenta**: Perfil de usuario con historial de reservas.
 - **Sistema de Calificaciones**: Permite a los usuarios compartir sus experiencias y calificar los servicios.
 
 ### Características Destacadas
@@ -39,15 +38,11 @@ El sistema se divide en dos interfaces principales:
   - Centralización de operaciones hoteleras
   - Reducción de errores en reservas
   - Optimización de la ocupación
-  - Análisis de datos en tiempo real
-  - Automatización de procesos rutinarios
 
 - **Para Usuarios**:
   - Proceso de reserva simplificado
   - Acceso a información detallada
   - Gestión autónoma de reservaciones
-  - Comunicación directa con el hotel
-  - Historial completo de estadías
 
 Esta solución integral está pensada para adaptarse tanto a hoteles independientes como a cadenas hoteleras, con capacidad de escalar según las necesidades del negocio.
 
@@ -55,9 +50,8 @@ Esta solución integral está pensada para adaptarse tanto a hoteles independien
 
 ### Backend
 - Java 11
-- Jakarta Servlets
+- tomcat7 Servlets
 - PostgreSQL (usuarios y roles)
-- Firebase (hoteles y reservas)
 - JWT para autenticación
 - BCrypt para encriptación de contraseñas
 
@@ -65,6 +59,7 @@ Esta solución integral está pensada para adaptarse tanto a hoteles independien
 - Vue.js 3
 - Tailwind CSS
 - Pinia (manejo de estado)
+- Firebase (hoteles y reservas), Host
 - Vue Router
 - Axios
 
@@ -99,6 +94,20 @@ Esta solución integral está pensada para adaptarse tanto a hoteles independien
 - `AuthenticationManager.java`: Gestión de autenticación
 - `ConfigurationManager.java`: Gestión de configuraciones
 
+### Principios SOLID Implementados
+
+#### 1. Single Responsibility Principle (SRP)
+Cada clase tiene una única responsabilidad:
+- Los DAOs manejan exclusivamente el acceso a datos
+- Los DTOs solo se encargan de transportar datos
+- Los Controllers solo gestionan peticiones HTTP
+- DatabaseConnection se encarga únicamente de las conexiones a la base de datos
+
+#### 2. Open/Closed Principle (OCP)
+El código está abierto a extensión pero cerrado a modificación:
+- Las interfaces DAO permiten agregar nuevas implementaciones sin modificar el código existente
+- El patrón Factory Method permite añadir nuevos tipos de DAOs sin cambiar el código actual
+
 ## Estructura de Base de Datos
 
 ### PostgreSQL
@@ -121,28 +130,60 @@ CREATE TABLE usuarios (
 );
 ```
 
-### Firebase
+### Firebase Collections
 
+#### 1. Hoteles
 ```javascript
 hoteles/
-    ├── {hotelId}/
-    │   ├── nombre: string
-    │   ├── ciudad: string
-    │   ├── descripcion: string
+   ├── {hotelId}/
+   │   ├── nombre: string
+   │   ├── ciudad: string
+   │   ├── descripcion: string
+   │   ├── imagen: string
+   │   ├── activo: boolean
+   │   └── habitaciones: [
+   │       {
+   │           id: string,
+   │           numero: string,
+   │           tipo: string,
+   │           precio: number,
+   │           capacidad: number,
+   │           disponible: boolean,
+   │           imagen: string,
+   │           estado: string,  // 'disponible', 'ocupada', 'mantenimiento'
+   │           camas: number,
+   │           descripcion: string
+   │       }
+   │   ]
+reservaciones/
+    ├── {reservacionId}/
+    │   ├── id: string
+    │   ├── idReservacion: string
+    │   ├── userId: string
+    │   ├── hotelId: string
+    │   ├── hotelNombre: string
+    │   ├── camas: number
+    │   ├── capacidad: number
+    │   ├── tipo: string
+    │   ├── numero: string
+    │   ├── precio: number
     │   ├── imagen: string
-    │   ├── activo: boolean
-    │   └── habitaciones: [
-    │       {
-    │           id: string,
-    │           numero: string,
-    │           tipo: string,
-    │           precio: number,
-    │           capacidad: number,
-    │           disponible: boolean,
-    │           imagen: string
-    │       }
-    │   ]
-```
+    │   ├── descripcion: string
+    │   ├── estado: string  // 'pendiente', 'confirmada', 'cancelada', 'completada'
+    │   ├── disponible: boolean
+    │   ├── createdAt: timestamp
+    │   └── canceledAt: timestamp (opcional)
+reservacionesCalificadas/
+    ├── {ratingId}/
+    │   ├── roomId: string
+    │   ├── hotelId: string
+    │   ├── reservationId: string
+    │   ├── rating: number
+    │   ├── comment: string
+    │   ├── createdAt: timestamp
+    │   ├── cleanliness: number,
+    │   ├── staffService: number,
+    │   └── comfort: number
 
 ## API Endpoints
 
@@ -202,7 +243,12 @@ El siguiente diagrama muestra el flujo de interacciones para los procesos princi
 
 ### Variables de Entorno Backend
 ```env
-DB_URL=jdbc:postgresql://localhost:5432/hotel_db
+DB_URL_PRIMARY=dbc:postgresql://hotel-db.c982saawuip8.us-east-1.rds.amazonaws.com:5432/hotel_db
+DB_USER=postgres
+DB_PASSWORD=
+JWT_SECRET=your_jwt_secret
+
+DB_URL_SECONDARY=jdbc:jdbc:postgresql://hotel-db-backup.c982saawuip8.us-east-1.rds.amazonaws.com:5432/hotel_db_backup
 DB_USER=postgres
 DB_PASSWORD=
 JWT_SECRET=your_jwt_secret
@@ -253,20 +299,12 @@ npm run build
 - Gestión completa de usuarios
 - Gestión de roles
 - Administración de hoteles y habitaciones
-- Visualización de estadísticas
 
 ### Usuarios
 - Búsqueda de hoteles
-- Filtrado por ciudad y características
+- Filtrado por ciudad y nombre
 - Visualización de detalles de habitaciones
 - Gestión de reservas
-
-## Contribución
-1. Fork del repositorio
-2. Crear rama para nueva funcionalidad (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit de cambios (`git commit -am 'Añadir nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
 
 ## Autor
 Alex Rey
