@@ -135,7 +135,7 @@ CREATE TABLE usuarios (
 #### 1. Hoteles
 
 ##### javascript
-
+```
 hoteles/
    ├── {hotelId}/
    │   ├── nombre: string
@@ -186,7 +186,7 @@ reservacionesCalificadas/
     │   ├── cleanliness: number,
     │   ├── staffService: number,
     │   └── comfort: number
-
+```
 ## API Endpoints
 
 ### Autenticación
