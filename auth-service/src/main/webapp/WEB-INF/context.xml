@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- Primary Database -->
+    <Resource 
+        name="jdbc/primaryDB" 
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+        removeAbandonedTimeout="60"
+        removeAbandoned="true"
+        logAbandoned="true"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://hotel-db.c982saawuip8.us-east-1.rds.amazonaws.com:5432/hotel_db"
+        username="postgres"
+        password="Hotel123"/>
+
+    <!-- Secondary Database -->
+    <Resource 
+        name="jdbc/secondaryDB" 
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+        removeAbandonedTimeout="60"
+        removeAbandoned="true"
+        logAbandoned="true"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://hotel-db-backup.c982saawuip8.us-east-1.rds.amazonaws.com:5432/hotel_db_backup"
+        username="postgres"
+        password="Hotel123"/>
+</Context>
