@@ -133,7 +133,9 @@ CREATE TABLE usuarios (
 ### Firebase Collections
 
 #### 1. Hoteles
-```javascript
+
+#####javascript
+
 hoteles/
    ├── {hotelId}/
    │   ├── nombre: string
