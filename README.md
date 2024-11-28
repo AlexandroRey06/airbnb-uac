@@ -134,7 +134,7 @@ CREATE TABLE usuarios (
 
 #### 1. Hoteles
 
-#####javascript
+##### javascript
 
 hoteles/
    ├── {hotelId}/
